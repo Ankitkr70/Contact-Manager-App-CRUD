@@ -1,10 +1,43 @@
 import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import React from "react";
+import NavBar from "./components/NavBar/NavBar";
+import AllContacts from "./components/AllContact/AllContacts";
+import EditContact from "./components/EditContact/EditContact";
+import ViewContact from "./components/ViewContact/ViewContact";
+import CreateContacts from "./components/CreateContact/CreateContacts";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Contact Manager App</h1>
-    </div>
+    <React.Fragment>
+      <NavBar></NavBar>
+      <Routes>
+        <Route
+          path="/"
+          element={<Navigate to="/contacts/allContacts" />}
+        ></Route>
+
+        <Route
+          path="/contacts/allContact"
+          element={<AllContacts></AllContacts>}
+        ></Route>
+
+        <Route
+          path="/contacts/editContact"
+          element={<EditContact></EditContact>}
+        ></Route>
+
+        <Route
+          path="/contacts/viewContact/:id"
+          element={<ViewContact></ViewContact>}
+        ></Route>
+
+        <Route
+          path="/contacts/addContact"
+          element={<CreateContacts></CreateContacts>}
+        ></Route>
+      </Routes>
+    </React.Fragment>
   );
 }
 
