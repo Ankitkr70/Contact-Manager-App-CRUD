@@ -11,32 +11,34 @@ function App() {
   return (
     <React.Fragment>
       <NavBar></NavBar>
-      <Routes>
-        <Route
-          path="/"
-          element={<Navigate to="/contacts/allContacts" />}
-        ></Route>
+      <div className="max-w-7xl m-auto">
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to="/contacts/allContact" />}
+          ></Route>
 
-        <Route
-          path="/contacts/allContact"
-          element={<AllContacts></AllContacts>}
-        ></Route>
+          <Route
+            path="/contacts/allContact"
+            element={<AllContacts></AllContacts>}
+          ></Route>
 
-        <Route
-          path="/contacts/editContact"
-          element={<EditContact></EditContact>}
-        ></Route>
+          <Route
+            path="/contacts/editContact"
+            element={<EditContact></EditContact>}
+          ></Route>
 
-        <Route
-          path="/contacts/viewContact/:id"
-          element={<ViewContact></ViewContact>}
-        ></Route>
+          <Route
+            path="/contacts/viewContact/:id"
+            element={<ViewContact></ViewContact>}
+          ></Route>
 
-        <Route
-          path="/contacts/addContact"
-          element={<CreateContacts></CreateContacts>}
-        ></Route>
-      </Routes>
+          <Route
+            path="/contacts/addContact"
+            element={<CreateContacts></CreateContacts>}
+          ></Route>
+        </Routes>
+      </div>
     </React.Fragment>
   );
 }
