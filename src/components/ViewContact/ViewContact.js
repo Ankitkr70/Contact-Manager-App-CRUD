@@ -1,34 +1,46 @@
-import React from "react";
-const defaultAvatar =
-  "https://library.kissclipart.com/20180918/rse/kissclipart-avatar-blue-icon-clipart-computer-icons-avatar-cli-a6b01992f1cd42fe.png";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 function ViewContact() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [constact, setContact] = useState({});
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/contacts/${id}`)
+      .then((response) => setContact(response.data));
+  }, []);
   return (
-    <div className="shadow-lg p-4 flex my-10 mx-20 gap-10 border-solid border-2 rounded-md items-center">
+    <div className="shadow-lg p-4 flex my-10 mx-20 gap-10 border-solid border-2 rounded-md items-center bg-green-300 ">
       <img
-        src={defaultAvatar}
+        src={constact.photoURL}
         alt="Default avatar"
-        width="200px"
-        height="200px"
+        style={{ width: "200px", height: "200px" }}
+        className="rounded-full"
       />
       <div>
         <p className="font-bold mb-4">
-          Name: <span>Ankit Kumar</span>
+          Name: <span>{constact.name}</span>
         </p>
         <p className="font-bold mb-4">
-          Mobile: <span>0123456</span>
+          Mobile: <span>{constact.mobile}</span>
         </p>
         <p className="font-bold mb-4">
-          Email: <span>ankitkr70@gmail.com</span>
+          Email: <span>{constact.email}</span>
         </p>
         <p className="font-bold mb-4">
-          Company: <span>Infy</span>
+          Company: <span>{constact.company}</span>
         </p>
         <p className="font-bold mb-4">
-          Group: <span>Friend</span>
+          Group: <span>{constact.group}</span>
         </p>
       </div>
-      <button className="self-end ml-auto h-8 px-4 text-md text-white bg-purple-700 hover:bg-purple-800 rounded-md flex items-center">
+      <button
+        onClick={() => navigate("/contacts/allContact")}
+        className="self-end ml-auto h-8 px-4 text-md text-white bg-purple-700 hover:bg-purple-800 rounded-md flex items-center"
+      >
         Back
       </button>
     </div>

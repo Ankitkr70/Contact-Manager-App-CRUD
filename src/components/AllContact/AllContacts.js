@@ -25,7 +25,7 @@ function AllContacts() {
   }, [query, searched, contacts]);
   return (
     <div className="mx-4">
-      <p className="text-5xl font-bold text-center my-10">All Constacts</p>
+      <p className="text-5xl font-bold text-center my-10">All Contacts</p>
       <div className="flex justify-center">
         <input
           value={query}
