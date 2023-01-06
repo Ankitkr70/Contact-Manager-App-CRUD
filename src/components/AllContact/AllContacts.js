@@ -1,12 +1,35 @@
-import React from "react";
-import { FaSearch, FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import axios from "axios";
+import SingleContact from "../SingleContact/SingleContact";
 
 function AllContacts() {
+  const [contacts, setContacts] = useState([]);
+  const [searched, setSearched] = useState([]);
+  const [query, setQuery] = useState("");
+  useEffect(() => {
+    axios.get("http://localhost:3001/contacts").then((response) => {
+      setContacts(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (query) {
+      const filterContacts = contacts.filter((contact) => {
+        return contact.name.toLowerCase().includes(query.toLowerCase());
+      });
+      setSearched(filterContacts);
+    } else {
+      setContacts(contacts);
+    }
+  }, [query, searched, contacts]);
   return (
     <div className="mx-4">
       <p className="text-5xl font-bold text-center my-10">All Constacts</p>
       <div className="flex justify-center">
         <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           type="text"
           placeholder="Seach..."
           className="border-solid border-2 focus:outline-none w-1/3
@@ -17,35 +40,13 @@ function AllContacts() {
         </button>
       </div>
       <div className="flex mt-10 justify-between gap-10 font-bold flex-wrap">
-        <div className="flex items-center w-2/5 gap-4">
-          <div>
-            <img
-              className="w-32 h-32"
-              src="https://library.kissclipart.com/20180918/rse/kissclipart-avatar-blue-icon-clipart-computer-icons-avatar-cli-a6b01992f1cd42fe.png"
-              alt="contact dp"
-            />
-          </div>
-          <div className="grow">
-            <div className="flex items-center  justify-between  mb-1 ">
-              <span>Name: Ankit Kumar</span>
-              <button className="bg-amber-500  hover:bg-amber-600 p-2.5 rounded-sm">
-                <FaEye></FaEye>
-              </button>
-            </div>
-            <div className="flex items-center  justify-between mb-1">
-              <span>Mobile: 012456789</span>
-              <button className="bg-blue-500 hover:bg-blue-600 p-2.5 rounded-sm">
-                <FaEdit></FaEdit>
-              </button>
-            </div>
-            <div className="flex items-center justify-between mb-1  ">
-              <span>Email: ankit@gmail.com</span>
-              <button className="bg-red-500 hover:bg-red-600 p-2.5 rounded-sm">
-                <FaTrash></FaTrash>
-              </button>
-            </div>
-          </div>
-        </div>
+        {query
+          ? searched.map((contact) => {
+              return <SingleContact data={contact}></SingleContact>;
+            })
+          : contacts.map((contact) => {
+              return <SingleContact data={contact}></SingleContact>;
+            })}
       </div>
     </div>
   );
