@@ -23,6 +23,18 @@ function AllContacts() {
       setContacts(contacts);
     }
   }, [query, searched, contacts]);
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:3001/contacts/${id}`).then((response) => {
+      if (response.status === 200) {
+        console.log("deleted");
+
+        axios.get("http://localhost:3001/contacts").then((response) => {
+          setContacts(response.data);
+        });
+      }
+    });
+  };
   return (
     <div className="mx-4">
       <p className="text-5xl font-bold text-center my-10">All Contacts</p>
@@ -42,10 +54,20 @@ function AllContacts() {
       <div className="flex mt-10 justify-between gap-10 font-bold flex-wrap">
         {query
           ? searched.map((contact) => {
-              return <SingleContact data={contact}></SingleContact>;
+              return (
+                <SingleContact
+                  data={contact}
+                  handleDelete={handleDelete}
+                ></SingleContact>
+              );
             })
           : contacts.map((contact) => {
-              return <SingleContact data={contact}></SingleContact>;
+              return (
+                <SingleContact
+                  data={contact}
+                  handleDelete={handleDelete}
+                ></SingleContact>
+              );
             })}
       </div>
     </div>

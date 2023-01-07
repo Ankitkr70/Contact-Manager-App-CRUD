@@ -24,7 +24,7 @@ function App() {
           ></Route>
 
           <Route
-            path="/contacts/editContact"
+            path="/contacts/editContact/:id"
             element={<EditContact></EditContact>}
           ></Route>
 
